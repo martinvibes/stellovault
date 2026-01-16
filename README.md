@@ -41,3 +41,113 @@ Target: Scalable to **1,000+ deals/month** with real-time oracle verification.
 - **Flash Settlements** — Instant cross-border payments using Stellar's built-in DEX/path payments.
 
 ## 📂 Repository Structure (Monorepo)
+
+```
+stellovault/
+├── contracts/                    # Soroban Smart Contracts (Rust)
+│   ├── Cargo.toml               # Rust dependencies for contracts
+│   ├── rust-toolchain.toml      # Rust toolchain configuration
+│   └── src/
+│       └── lib.rs               # Main contract: StelloVault trade finance logic
+│
+├── frontend/                     # Next.js Frontend Application
+│   ├── package.json             # Node.js dependencies
+│   ├── next.config.ts           # Next.js configuration
+│   ├── tailwind.config.js       # Tailwind CSS configuration
+│   ├── src/
+│   │   ├── app/                 # Next.js App Router
+│   │   │   ├── layout.tsx       # Root layout
+│   │   │   ├── page.tsx         # Home page
+│   │   │   ├── dashboard/       # User dashboard
+│   │   │   ├── escrows/         # Escrow management
+│   │   │   ├── collateral/      # Collateral tokenization
+│   │   │   └── profile/         # User profile
+│   │   ├── components/          # Reusable React components
+│   │   │   ├── ui/              # UI primitives (Button, etc.)
+│   │   │   ├── forms/           # Form components
+│   │   │   └── dashboard/       # Dashboard-specific components
+│   │   ├── lib/                 # Library utilities and configurations
+│   │   ├── hooks/               # Custom React hooks
+│   │   ├── types/               # TypeScript type definitions
+│   │   └── utils/               # Utility functions
+│   └── public/                  # Static assets
+│
+├── server/                      # Rust Backend API Server
+│   ├── Cargo.toml               # Rust dependencies for backend
+│   ├── src/
+│   │   ├── main.rs              # Server entry point
+│   │   ├── lib.rs               # Library exports
+│   │   ├── handlers.rs          # API route handlers
+│   │   ├── models.rs            # Data models and types
+│   │   ├── routes.rs            # Route definitions
+│   │   ├── services.rs          # Business logic services
+│   │   ├── middleware.rs        # HTTP middleware
+│   │   └── utils.rs             # Utility functions
+│   └── tests/                   # Integration tests
+│
+└── README.md                    # Project documentation
+```
+
+### Directory Details
+
+#### Contracts (`/contracts`)
+- **Purpose**: Soroban smart contracts for trade finance operations
+- **Tech**: Rust with Soroban SDK
+- **Key Contract**: `StelloVaultContract` - handles collateral tokenization and escrow management
+- **Build**: `cargo build --release --target wasm32-unknown-unknown`
+
+#### Frontend (`/frontend`)
+- **Purpose**: User interface for the dApp
+- **Tech**: Next.js 14+, TypeScript, Tailwind CSS
+- **Features**: Dashboard, escrow management, collateral tokenization
+- **Scripts**: `npm run dev` (development), `npm run build` (production)
+
+#### Server (`/server`)
+- **Purpose**: Backend API server for analytics, user management, and external integrations
+- **Tech**: Rust with Axum web framework
+- **Features**: REST API, database integration, risk scoring engine
+- **Scripts**: `cargo run` (development), `cargo build --release` (production)
+
+### Getting Started
+
+#### Prerequisites
+- Rust (latest stable)
+- Node.js 18+
+- PostgreSQL (for backend database)
+- Soroban CLI (for contract development)
+
+#### Quick Start
+
+1. **Clone and setup contracts:**
+   ```bash
+   cd contracts
+   cargo build --release --target wasm32-unknown-unknown
+   ```
+
+2. **Setup frontend:**
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+
+3. **Setup backend:**
+   ```bash
+   cd server
+   cargo run
+   ```
+
+### Development Workflow
+
+1. **Contracts**: Modify smart contract logic in `contracts/src/lib.rs`
+2. **Frontend**: Add UI components and pages in respective directories
+3. **Backend**: Implement API endpoints and business logic in server modules
+4. **Testing**: Run tests for each component separately
+5. **Deployment**: Deploy contracts to Stellar, build and deploy frontend/backend
+
+### Key Integration Points
+
+- **Contract ↔ Frontend**: Direct Soroban contract calls from React components
+- **Frontend ↔ Backend**: REST API calls for analytics and user data
+- **Backend ↔ Contracts**: Indexer services to track on-chain events
+- **External APIs**: Integration with shipping providers (Maersk) and oracles
